@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hod Login</title>
+</head>
+<body>
+    {{key}}
+   <form action=""method="post">
+    {%csrf_token%}
+    Hod Id:<input type="text" name="hod_id"required>
+    Passowrd:<input type="password" name="pass" required>
+    <button type="submit">LOGIN IN</button>
+    <h6 >Don't have an register</h6>
+    
+
+   </form>
+   <a href="Hod_sign">Hod sign in</a>
+
+</body>
+</html>

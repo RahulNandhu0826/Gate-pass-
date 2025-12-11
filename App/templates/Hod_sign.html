@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hod sign in</title>
+</head>
+<body>
+      {{key}}
+    <form action="" method="post">
+    {%csrf_token%}
+    <h3>HOD SIGN UP</h3>
+    Teacher Name: <input type="text" name="hod_name">
+    Teacher Id: <input type="text" name="hod_id">
+    Teacher Email: <input type="email" name="hod_email">
+    Teacher Phone Number: <input type="tel" name="hod_phone">
+    Password: <input type="password" name="pass">
+    Confirm Password: <input type="password" name="c_pass">
+    <button type="submit">SIGN UP</button>
+        
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security sign in</title>
+</head>
+<body>
+      {{key}}
+    <form action="" method="post">
+    {%csrf_token%}
+    <h3>Security SIGN UP</h3>
+    Security Name: <input type="text" name="security_name">
+    Security Id: <input type="text" name="security_id">
+    Security Email: <input type="email" name="security_email">
+    Security Phone Number: <input type="tel" name="security_phone">
+    Password: <input type="password" name="pass">
+    Confirm Password: <input type="password" name="c_pass">
+    <button type="submit">SIGN UP</button>
+        
+    </form>
+    
+</body>
+</html>

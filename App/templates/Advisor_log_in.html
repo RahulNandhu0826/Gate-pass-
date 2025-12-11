@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advisor Login</title>
+</head>
+<body>
+    {{key}}
+   <form action=""method="post">
+    {%csrf_token%}
+    Advisor Id:<input type="text" name="Ad_id"required>
+    Passowrd:<input type="password" name="pass" required>
+    <button type="submit">LOGIN IN</button>
+    <h6 >Don't have an account?</h6>
+    
+
+   </form>
+   <a href="Advisor_sign">Advisor sign in</a>
+
+</body>
+</html>
