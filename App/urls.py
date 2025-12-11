@@ -33,6 +33,13 @@ urlpatterns= [
     path('Advisor log out',views.advisor_log_out), 
 
     #-----------Security-----------
-    path('Security log out',views.security_log_out),    
+    path('Security log out',views.security_log_out),  
+
+    #----------Add Student---------
+    path('Add_student',views.Student), 
+    
+    #------------Pofile Views--------
+
+    path('Advisor_profile',views.Advisor_profile),
 
 ]

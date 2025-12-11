@@ -222,4 +222,17 @@ def security_log_out(request):
     logout(request)
     return redirect(security_log)
 
+# -------------Profile view--------------
+#-------------Advisor view---------------
+def Advisor_profile(request):
+    Advisor_pro=TEACHER.objects.get(Advisor=request.user)
+    print( Advisor_pro.Advisor.username)
+          
+    return render(request,'Advisor_profile.html',{'key':Advisor_pro})
+
+
+#--- adding students details-------------
+def Student(request):
+    return render(request,"Add_student.html")
+
 
