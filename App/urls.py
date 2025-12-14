@@ -35,11 +35,20 @@ urlpatterns= [
     #-----------Security-----------
     path('Security log out',views.security_log_out),  
 
-    #----------Add Student---------
-    path('Add_student',views.Student), 
+    #--Advisor_student_barcode_search--
+
+    path('Advisor_student_barcode_search',views.Advisor_student_barcode_search), 
     
     #------------Pofile Views--------
 
     path('Advisor_profile',views.Advisor_profile),
+
+    #-----------Add Students----------
+
+    path('Add_students_details',views.Add_students_details),
+
+    #----------Student barcode-------
+
+    path('save/', views.save_student, name='save_student'),
 
 ]

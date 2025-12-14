@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Barcode Scanner</title>
+
+    <!-- Barcode Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        #reader {
+            width: 400px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2 align="center">Scan Barcode (Laptop Camera)</h2>
+<form action="" method="post">
+<div id="reader"></div>
+
+{%csrf_token%}
+
+<input type="text" id="barcode" placeholder="Scanned barcode" name="barcode"
+       style="display:block;margin:20px auto;font-size:18px;" readonly>     
+<input type="text" value="{{keys.Advisor.id}}" name="ad">
+   <input type="submit" >
+</form>
+<script>
+function onScanSuccess(decodedText) {
+    document.getElementById("barcode").value = decodedText;
+    console.log("Scanned:", decodedText);
+}
+
+new Html5Qrcode("reader").start(
+    { facingMode: "environment" }, // laptop webcam
+    { fps: 10, qrbox: 250 },
+    onScanSuccess
+);
+</script>
+
+</body>
+</html>

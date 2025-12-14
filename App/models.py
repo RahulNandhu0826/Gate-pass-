@@ -24,3 +24,17 @@ class Security(models.Model):
     SECURITYY=models.ForeignKey(User,on_delete=models.CASCADE)
     SECURITY_NAME=models.CharField(max_length=30,null=True)
     SECURITY_PHONE=models.CharField(max_length=10)
+#barcode reader
+
+class Details_students(models.Model):
+    TEACHER_NAME=models.ForeignKey(TEACHER,on_delete=models.CASCADE) 
+    ADMISSION_NO=models.CharField(max_length=20, unique=True)
+    NAME=models.CharField(max_length=100)
+    DEPARTMENT= models.CharField(max_length=50)
+    BRANCH=models.CharField(max_length=20)
+    YEAR=models.CharField(max_length=20)
+    PHONE1= models.CharField(max_length=10)
+    PHONE2 = models.CharField(max_length=10, blank=True, null=True)
+   
+   
+    

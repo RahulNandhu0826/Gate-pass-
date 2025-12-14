@@ -6,6 +6,11 @@ from django.contrib.auth.models import User, auth
 #log out
 from django.contrib.auth import logout
 
+#-------scanning barcode----------
+
+
+# from .models import Student
+
 # Create your views here.
 
 #-----------HOMES------------------
@@ -231,8 +236,45 @@ def Advisor_profile(request):
     return render(request,'Advisor_profile.html',{'key':Advisor_pro})
 
 
-#--- adding students details-------------
-def Student(request):
-    return render(request,"Add_student.html")
+#--- Adding students details-------------
+def Add_students_details(request):
+    user=TEACHER.objects.get(Advisor__username=request.user)
+    if request.method=='POST':
+        Std_name=request.POST['St_name']
+        Add_no=request.POST['Ad_no']
+        Depart=request.POST['Dept']
+        Branch_name=request.POST['Branch']
+        Year=request.POST['Year']
+        Phone_no1=request.POST['Phone1']
+        Phone_no2=request.POST['Phone2']
+        print(Add_no)
+        Details_students(TEACHER_NAME=user,ADMISSION_NO=Add_no,NAME=Std_name,DEPARTMENT=Depart,BRANCH=Branch_name,YEAR=Year,PHONE1=Phone_no1,PHONE2=Phone_no2).save()
+        
+        return redirect(advisor_home)
+    return render(request,'Add_students_details.html')
 
 
+
+
+
+#-----Searching with Barcode of teacher-------
+
+def Advisor_student_barcode_search(request):
+    TEACHERS=TEACHER.objects.get(Advisor=request.user)
+    if request.method=='POST':
+        Scanned=request.POST['barcode']
+        teacher=request.POST['ad']
+        print(Scanned)
+        student=Details_students.objects.get(TEACHER_NAME=teacher)
+        if int(student.ADMISSION_NO)==int(Scanned):
+            print("Entered")
+        return render(request,'Details_student.html',{'key':student})
+
+    return render(request,"Advisor_student_barcode_search.html",{'keys':TEACHERS})
+
+#--------barcode reader---------------------
+
+def save_student(request):
+    barcode = request.POST.get('barcode')
+    return JsonResponse({'barcode': barcode})
+    # return render(request,'Add_student.html')
