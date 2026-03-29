@@ -27,13 +27,16 @@ urlpatterns= [
     #-----------LOG OUTS-----------Hod_log
 
     #-----------Advisor------------
-    path('Hod log out',views.Hod_log_out),
+    path('Hodlogout',views.Hod_log_out),
 
     #-----------Advisor------------
-    path('Advisor log out',views.advisor_log_out), 
+    path('Advisorlogout',views.advisor_log_out), 
 
     #-----------Security-----------
-    path('Security log out',views.security_log_out),  
+    path('Securitylogout',views.security_log_out),  
+    #-----------------------------------------------Advisor Room------------------------------------------------------------------------------------
+    #-------student request-------
+    path('Student_requsting<str:admission_no>', views.Student_requsting ,name='student_req'),
 
     #--Advisor_student_barcode_search--
 
@@ -47,8 +50,46 @@ urlpatterns= [
 
     path('Add_students_details',views.Add_students_details),
 
-    #----------Student barcode-------
+    #----------Advisor request Student barcode-------
 
     path('save/', views.save_student, name='save_student'),
+
+
+    #--------------without id card---------------------------
+    path('Advisor_admission',views.Advisor_admission),
+
+    path('redooo',views.redooo),
+    
+    path('rdRejectss<str:pk>',views.rdRejectss,name='rdRejectss'),
+
+    #-----------------------------------------------------------------------Security Room-----------------------------------------------------------
+    #---------Security requst  barcode---------------
+    
+    path('Security_Barcode',views.Security_Barcode),
+    
+    path('Security_Approval',views.Security_Approval),
+    path('Security_re_entry_scan',views.Security_re_entry_scan),
+    
+    path('Security_re_entry',views.Security_re_entry),
+    #--------------------premission approval--------------------------
+    path('check<str:pk>',views.checks,name='checks'),
+    path('re_entry<str:pk>',views.re_entry,name='re_entrys'),
+    #----------------------------------------------------------------------HOD Room-----------------------------------------------------------------
+
+    
+    path('Hod_st_approval',views.Hod_st_approval),
+    path('Hod_tr_Approval',views.Hod_tr_Approval),
+    path('Gate_list',views.gatelist),
+   
+    #--------------------premission approval--------------------------
+    path('pay_accepts<str:pk>',views.pay_accepts,name='pay_acceptss'),
+    path('pay_Rejects<str:pk>',views.pay_Rejects,name='pay_Rejectss'),
+
+
+   
+   
+
+    #----------Live Clock------------
+    # path("clock/", views.live_clock, name="live_clock"),
 
 ]

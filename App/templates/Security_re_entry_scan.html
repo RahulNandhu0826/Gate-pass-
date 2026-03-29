@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Security  Re Entry Barcode Search</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/2ccda84a46.js" crossorigin="anonymous"></script>
+
+    <!-- Barcode Scanner -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        body{
+            background: url("{% static 'security.jpeg' %}") no-repeat center/cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scanner-card{
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            width: 420px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        #reader{
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        #reader{
+            width:100%;
+            border-radius:10px;
+            overflow:hidden;
+        }
+
+        .back-btn{
+            position:absolute;
+            top:20px;
+            left:20px;
+        }
+
+    </style>
+</head>
+<body>
+<!-- Back Button -->
+<button  class="btn btn-light shadow back-btn">
+<i class="fas fa-arrow-left"><a href="Security_Home">Back</a></i> 
+</button>
+
+<div class="scanner-card">
+
+    <i class="fas fa-qrcode fa-3x text-primary mb-2"></i>
+    {% if key %}
+            <div class="alert alert-danger text-center">{{ key }}</div>
+        {% endif %}
+    <h4> Barcode Scanner</h4>
+    <small class="text-muted">Point camera to barcode</small>
+
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+
+        <div id="reader"></div>
+
+        <input type="text" id="barcode" name="barcode"
+               class="form-control mt-3"
+               placeholder="Scanned code"
+               readonly>
+
+        <input type="hidden" value="{{ keys.SECURITYY.id }}" name="secu">
+
+        <button type="submit" id="submitBtn"
+                class="btn btn-success mt-3 w-100" disabled>
+            Submit
+        </button>
+    </form>
+
+</div>
+
+<script>
+const html5QrCode = new Html5Qrcode("reader");
+
+const config = {
+    fps: 15,              // Optimal speed
+    qrbox: { width: 220, height: 220 }, // Smaller box = faster
+    rememberLastUsedCamera: true,
+    aspectRatio: 1.0
+};
+
+function onScanSuccess(decodedText) {
+    document.getElementById("barcode").value = decodedText;
+    document.getElementById("submitBtn").disabled = false;
+
+    // Stop scanner immediately (VERY IMPORTANT)
+    html5QrCode.stop().then(() => {
+        console.log("Scanner stopped");
+    });
+
+    // Optional: auto submit
+    // document.querySelector("form").submit();
+}
+
+Html5Qrcode.getCameras().then(cameras => {
+    if (cameras && cameras.length) {
+        html5QrCode.start(
+            { deviceId: { exact: cameras[cameras.length - 1].id } },
+            config,
+            onScanSuccess
+        );
+    }
+});
+</script>
+
+</body>
+</html>

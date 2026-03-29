@@ -1,15 +1,141 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+<meta charset="UTF-8">
+<title>Advisor Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: url("{% static 'advisor.jpeg' %}") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Overlay for readability */
+.overlay{
+  background: rgba(0,0,0,0.6);
+  min-height:100vh;
+  padding-bottom:40px;
+}
+
+/* Navbar */
+.navbar{
+  background: rgba(0,0,0,0.8);
+}
+
+/* Cards */
+.card-box{
+  border-radius:20px;
+  transition:0.4s;
+  cursor:pointer;
+}
+
+.card-box:hover{
+  transform:translateY(-10px) scale(1.03);
+  box-shadow:0 15px 35px rgba(0,0,0,0.4);
+}
+
+/* Icons */
+.icon{
+  font-size:45px;
+  margin-bottom:15px;
+}
+
+/* Card colors */
+.bg-glass{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  color:white;
+}
+
+/* Welcome text */
+.welcome{
+  color:white;
+  text-align:center;
+  margin:30px 0;
+}
+
+/* Make whole card clickable */
+.card-link{
+  text-decoration:none;
+}
+</style>
 </head>
+
 <body>
-    <h1>hai</h1>
-    <a href="Add_students_details">Add Students</a>
-    <a href="Advisor_student_barcode_search">Student Barcode Search</a>
-    <a href="Advisor_profile">Profile view</a>
+
+<div class="overlay">
+
+<!-- 🔥 UPDATED NAVBAR -->
+<nav class="navbar navbar-dark">
+<div class="container d-flex justify-content-between">
+
+<span class="navbar-brand fw-bold">Advisor Panel</span>
+
+<div class="d-flex gap-2">
+  <!-- 🚪 Logout -->
+  <a href="redooo" class="btn  btn-sm">
+    ❌ 
+  </a>
+
+  <!-- 👤 Profile -->
+  <a href="Advisor_profile" class="btn btn-info btn-sm">
+    👤 Profile
+  </a>
+
+  <!-- 🚪 Logout -->
+  <a href="Advisorlogout" class="btn btn-danger btn-sm">
+    🚪 Logout
+  </a>
+
+</div>
+
+</div>
+</nav>
+
+<!-- Content -->
+<div class="container">
+
+<h3 class="welcome">
+Hai {{key.TEACHER_NAME}} 👋 <br>
+Welcome to Advisor Dashboard
+</h3>
+
+<div class="row g-4 justify-content-center">
+
+<!-- Add Students -->
+<div class="col-md-4">
+<a href="Add_students_details" class="card-link">
+<div class="card card-box bg-glass text-center p-4">
+<div class="icon text-info">➕</div>
+<h5>Add Students</h5>
+<p class="text-light">Register new students</p>
+</div>
+</a>
+</div>
+
+<!-- Barcode Search -->
+<div class="col-md-4">
+<a href="Advisor_student_barcode_search" class="card-link">
+<div class="card card-box bg-glass text-center p-4">
+<div class="icon text-success">📷</div>
+<h5>Barcode Search</h5>
+<p class="text-light">Scan student barcode</p>
+</div>
+</a>
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>

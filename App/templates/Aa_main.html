@@ -4,34 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Gate Pass System - Home</title>
 
     <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/2ccda84a46.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/2ccda84a46.js" crossorigin="anonymous"></script>
 
+    <style>
+        body{
+            background: url("static/main.jpeg") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+
+        .overlay{
+            background: rgba(0,0,0,0.6);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-box{
+            transition: 0.3s;
+            border-radius: 15px;
+        }
+
+        .card-box:hover{
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .icon{
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        h1{
+            color: white;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+    </style>
 </head>
-<style>
-    body{
-    background: url("static/advisor.jpg");
-    
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 100rem;
-    
-    }
-    a{
-        color: aqua;
-        background-color: antiquewhite;
-        size: 50px;
-    }
-</style>
 <body>
-    <a href="Advisor_log">Advisior log in</a>
-    <a href="Security_log">Security log in</a>
-    <a href="Hod_log">Hod log in</a>
+
+<div class="overlay">
+    <div class="container text-center">
+
+        <h1>Gate Pass Management System</h1>
+
+        <div class="row justify-content-center">
+
+            <!-- Advisor -->
+            <div class="col-md-4 mb-4">
+                <div class="card card-box p-4">
+                    <i class="fas fa-user-tie icon"></i>
+                    <h4>Advisor Login</h4>
+                    <a href=Advisor_log class="btn btn-primary mt-3">Login</a>
+                </div>
+            </div>
+
+            <!-- Security -->
+            <div class="col-md-4 mb-4">
+                <div class="card card-box p-4">
+                    <i class="fas fa-shield-alt icon"></i>
+                    <h4>Security Login</h4>
+                    <a href=Security_log class="btn btn-success mt-3">Login</a>
+                </div>
+            </div>
+
+            <!-- HOD -->
+            <div class="col-md-4 mb-4">
+                <div class="card card-box p-4">
+                    <i class="fas fa-user-graduate icon"></i>
+                    <h4>HOD Login</h4>
+                    <a href="Hod_log" class="btn btn-warning mt-3">Login</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 </body>
 </html>

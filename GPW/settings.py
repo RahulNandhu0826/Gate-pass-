@@ -119,3 +119,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL='/images/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'App/static')
+
+#message
+
+TWILIO_ACCOUNT_SID = 'AC487e7c2e6e28e6ffb9b1cee4bfe38907'
+TWILIO_AUTH_TOKEN = 'ecac0f15bc421823142a51d3f8d15d74'
+TWILIO_PHONE_NUMBER = '+12543848353'
+
+

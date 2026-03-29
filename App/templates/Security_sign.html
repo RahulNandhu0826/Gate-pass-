@@ -1,24 +1,171 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security sign in</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Sign Up</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+
+body{
+height:100vh;
+background:url("{% static 'security.jpeg' %}") no-repeat center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Segoe UI;
+}
+
+/* main container */
+.signup-container{
+max-width:900px;
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+animation:fadeIn 1s ease;
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+}
+
+/* left design panel */
+.left-panel{
+background:linear-gradient(135deg,#0d6efd,#6610f2);
+color:white;
+padding:50px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+text-align:center;
+}
+
+.left-panel h2{
+font-weight:bold;
+}
+
+.left-panel i{
+font-size:70px;
+margin-bottom:20px;
+}
+
+/* right form section */
+.right-panel{
+padding:40px;
+}
+
+.form-control{
+border-radius:8px;
+}
+
+.input-group-text{
+background:#f1f1f1;
+}
+
+/* button */
+.btn-primary{
+border-radius:8px;
+font-weight:500;
+}
+
+.btn-primary:hover{
+transform:scale(1.04);
+transition:.3s;
+}
+
+/* animation */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+
 </head>
+
 <body>
-      {{key}}
-    <form action="" method="post">
-    {%csrf_token%}
-    <h3>Security SIGN UP</h3>
-    Security Name: <input type="text" name="security_name">
-    Security Id: <input type="text" name="security_id">
-    Security Email: <input type="email" name="security_email">
-    Security Phone Number: <input type="tel" name="security_phone">
-    Password: <input type="password" name="pass">
-    Confirm Password: <input type="password" name="c_pass">
-    <button type="submit">SIGN UP</button>
-        
-    </form>
-    
+
+<div class="container signup-container">
+
+<div class="row g-0">
+
+<!-- Left Side Design -->
+<div class="col-md-5 left-panel">
+
+<i class="bi bi-shield-lock-fill"></i>
+
+<h2>Security Portal</h2>
+
+<p class="mt-3">
+Register to manage student gate pass verification and campus entry monitoring system.
+</p>
+
+</div>
+
+
+<!-- Right Side Form -->
+<div class="col-md-7 right-panel">
+
+<h3 class="text-center text-primary mb-3">Security Sign Up</h3>
+
+<p class="text-danger text-center">{{key}}</p>
+
+<form method="post">
+{% csrf_token %}
+
+<div class="mb-3 input-group">
+<span class="input-group-text"><i class="bi bi-person"></i></span>
+<input type="text" name="security_name" class="form-control" placeholder="Security Name" required>
+</div>
+
+<div class="mb-3 input-group">
+<span class="input-group-text"><i class="bi bi-badge-ad"></i></span>
+<input type="text" name="security_id" class="form-control" placeholder="Security ID" required>
+</div>
+
+<div class="mb-3 input-group">
+<span class="input-group-text"><i class="bi bi-envelope"></i></span>
+<input type="email" name="security_email" class="form-control" placeholder="Email Address" required>
+</div>
+
+<div class="mb-3 input-group">
+<span class="input-group-text"><i class="bi bi-telephone"></i></span>
+<input type="tel" name="security_phone" class="form-control" placeholder="Phone Number" required>
+</div>
+
+<div class="mb-3 input-group">
+<span class="input-group-text"><i class="bi bi-lock"></i></span>
+<input type="password" name="pass" class="form-control" placeholder="Password" required>
+</div>
+
+<div class="mb-3 input-group">
+<span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+<input type="password" name="c_pass" class="form-control" placeholder="Confirm Password" required>
+</div>
+
+<div class="d-grid">
+<button type="submit" class="btn btn-primary">Create Account</button>
+</div>
+
+</form>
+<a href="Security_log">login</a>
+</div>
+
+</div>
+
+</div>
+
 </body>
 </html>

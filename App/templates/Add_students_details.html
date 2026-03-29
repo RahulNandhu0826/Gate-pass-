@@ -1,23 +1,138 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add_students_details</title>
-</head>
-<body>
-   <form action=""method="post">
-    {%csrf_token%}
-   Name: <input type="text" name="St_name">
-   Admission No: <input type="text" name="Ad_no">
-   Department: <input type="text" name="Dept">
-   Branch: <input type="text" name="Branch">
-   Year: <input type="text" name="Year">
-   Phone_no 1: <input type="text" name="Phone1">
-   Phone_no 2: <input type="text" name="Phone2">
-   <button type="submit">submit</button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Student Details</title>
 
-     
-    </form>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<style>
+body{
+    background: url("{% static 'advisor.jpeg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+/* Overlay for better visibility */
+.overlay{
+    background: rgba(0,0,0,0.6);
+    min-height:100vh;
+    padding-top:80px;
+}
+
+/* Navbar */
+.navbar{
+    background: rgba(0,0,0,0.8);
+}
+
+/* Card */
+.card{
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Inputs */
+.form-control{
+    border-radius: 10px;
+}
+
+/* Buttons */
+.btn-submit{
+    border-radius: 25px;
+    padding: 10px 30px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark fixed-top">
+<div class="container d-flex justify-content-between">
+
+<span class="navbar-brand">Add Student</span>
+
+<div>
+<!-- Back Button -->
+<a href="Advisor_home" class="btn btn-light btn-sm mr-2">
+⬅ Back
+</a>
+
+
+</div>
+
+</div>
+</nav>
+
+<div class="overlay">
+
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+<div class="card p-4">
+<h3 class="text-center mb-4">Add Student Details</h3>
+
+<form method="post">
+{% csrf_token %}
+
+<div class="form-group">
+<label>Student Name</label>
+<input type="text" name="St_name" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Admission Number</label>
+<input type="text" name="Ad_no" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Department</label>
+<input type="text" name="Dept" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Branch</label>
+<input type="text" name="Branch" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Year</label>
+<select name="Year" class="form-control" required>
+<option value="">Select Year</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Phone Number 1</label>
+<input type="tel" name="Phone1" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Phone Number 2</label>
+<input type="tel" name="Phone2" class="form-control">
+</div>
+
+<div class="text-center mt-4">
+<button type="submit" class="btn btn-primary btn-submit">Submit</button>
+<button type="reset" class="btn btn-secondary btn-submit">Clear</button>
+</div>
+
+</form>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
 </body>
 </html>

@@ -1,42 +1,144 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Barcode Scanner</title>
+<title>Barcode Search</title>
 
-    <!-- Barcode Scanner Library -->
-    <script src="https://unpkg.com/html5-qrcode"></script>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <style>
-        #reader {
-            width: 400px;
-            margin: auto;
-        }
-    </style>
-</head>
-<body>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/2ccda84a46.js" crossorigin="anonymous"></script>
 
-<h2 align="center">Scan Barcode (Laptop Camera)</h2>
-<form action="" method="post">
-<div id="reader"></div>
+<!-- Barcode Scanner -->
+<script src="https://unpkg.com/html5-qrcode"></script>
 
-{%csrf_token%}
-
-<input type="text" id="barcode" placeholder="Scanned barcode" name="barcode"
-       style="display:block;margin:20px auto;font-size:18px;" readonly>     
-<input type="text" value="{{keys.Advisor.id}}" name="ad">
-   <input type="submit" >
-</form>
-<script>
-function onScanSuccess(decodedText) {
-    document.getElementById("barcode").value = decodedText;
-    console.log("Scanned:", decodedText);
+<style>
+body{
+    background: url("{% static 'advisor.jpeg' %}") no-repeat center/cover;
+    min-height: 100vh;
 }
 
-new Html5Qrcode("reader").start(
-    { facingMode: "environment" }, // laptop webcam
-    { fps: 10, qrbox: 250 },
-    onScanSuccess
-);
+/* Overlay */
+.overlay{
+    background: rgba(0,0,0,0.6);
+    min-height:100vh;
+    padding-top:80px;
+}
+
+/* Navbar */
+.navbar{
+    background: rgba(0,0,0,0.85);
+}
+
+/* Scanner card */
+.scanner-card{
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    width: 420px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    text-align: center;
+    margin:auto;
+}
+
+/* Reader */
+#reader{
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark fixed-top">
+<div class="container d-flex justify-content-between">
+
+<span class="navbar-brand">
+<i class="fas fa-qrcode"></i> Barcode Scanner
+</span>
+
+<div>
+<!-- Back Button -->
+<a href="Advisor_home" class="btn btn-light btn-sm mr-2">
+⬅ Back
+</a>
+   
+<a href=" Advisor_admission"> Without Id Card</a>
+
+
+</div>
+
+</div>
+</nav>
+
+<div class="overlay">
+
+<div class="scanner-card">
+
+<i class="fas fa-qrcode fa-3x text-primary mb-2"></i>
+
+{% if key %}
+<div class="alert alert-success text-center">{{ key }}</div>
+{% endif %}
+
+<h4>Barcode Scanner</h4>
+<small class="text-muted">Point camera to barcode</small>
+
+<form method="post" class="mt-3">
+{% csrf_token %}
+
+<div id="reader"></div>
+
+<input type="text" id="barcode" name="barcode"
+       class="form-control mt-3"
+       placeholder="Scanned code"
+       readonly>
+
+<input type="text" value="{{ keys.TEACHER_DEPT }}" hidden name="ad">
+
+<button type="submit" id="submitBtn"
+        class="btn btn-success mt-3 w-100" disabled>
+Submit
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+const html5QrCode = new Html5Qrcode("reader");
+
+const config = {
+    fps: 15,
+    qrbox: { width: 220, height: 220 },
+    rememberLastUsedCamera: true,
+    aspectRatio: 1.0
+};
+
+function onScanSuccess(decodedText) {
+    document.getElementById("barcode").value = decodedText;
+    document.getElementById("submitBtn").disabled = false;
+
+    html5QrCode.stop().then(() => {
+        console.log("Scanner stopped");
+    });
+}
+
+Html5Qrcode.getCameras().then(cameras => {
+    if (cameras && cameras.length) {
+        html5QrCode.start(
+            { deviceId: { exact: cameras[cameras.length - 1].id } },
+            config,
+            onScanSuccess
+        );
+    }
+});
 </script>
 
 </body>

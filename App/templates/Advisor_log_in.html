@@ -1,22 +1,81 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advisor Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body{
+            min-height:100vh;
+            background: url("static/advisor.jpeg");   
+             background-size:cover;
+            /* background: linear-gradient(120deg,#1d2671,#c33764); */
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .login-card{
+            background:#ffffff;
+            opacity: 90%;
+            box-shadow: 50%,50%;
+            border-radius:12px;
+            padding:30px;
+            width:100%;
+            max-width:420px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.25);
+        }
+        .login-title{
+            text-align:center;
+            font-weight:600;
+            margin-bottom:20px;
+        }
+        .form-control{
+            border-radius:25px;
+        }
+        .btn-login{
+            border-radius:25px;
+        }
+        .footer-text{
+            text-align:center;
+            margin-top:15px;
+        }
+    </style>
 </head>
 <body>
-    {{key}}
-   <form action=""method="post">
-    {%csrf_token%}
-    Advisor Id:<input type="text" name="Ad_id"required>
-    Passowrd:<input type="password" name="pass" required>
-    <button type="submit">LOGIN IN</button>
-    <h6 >Don't have an account?</h6>
-    
 
-   </form>
-   <a href="Advisor_sign">Advisor sign in</a>
+<div class="login-card">
+    <h3 class="login-title">Advisor Login</h3>
+         {% if key %}
+            <div class="alert alert-danger text-center">{{ key }}</div>
+        {% endif %}
+    <form action="" method="post">
+        <!-- Django CSRF here -->
+        {%csrf_token%}
+
+        <div class="form-group">
+            <input type="text" name="Ad_id" class="form-control" placeholder="Advisor ID" required>
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="pass" class="form-control" placeholder="Password" required>
+            
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block btn-login">Login</button>
+    </form>
+
+    <div class="footer-text">
+        <small>Don't have an account?</small><br>
+        <a href="Advisor_sign">Sign Up</a>
+    </div>
+</div>
+
+
 
 </body>
 </html>
