@@ -54,15 +54,15 @@ class Gate_Pass(models.Model):
     exit_time=models.TimeField(null=True, blank=True)
     re_enrty_time=models.TimeField(null=True, blank=True)
 
-# class Security_Gate(models.Model):
-#     TEACHER_ID=models.ForeignKey(TEACHER,on_delete=models.CASCADE)
-#     STUDENT_ID=models.ForeignKey(Details_students,on_delete=models.CASCADE)
-#     GATE_PASS=models.ForeignKey(Gate_Pass,on_delete=models.CASCADE)
-#     GATE_STUD_NAME=models.CharField(max_length=20)  
-#     GATE_STUD_BRANCH=models.CharField(max_length=20)
-#     GATE_STUD_YEAR=models.CharField(max_length=20)
-#     gate_time = models.TimeField()
-#     re_entry= models.TimeField()
+class Security_Gate(models.Model):
+    TEACHER_ID=models.ForeignKey(TEACHER,on_delete=models.CASCADE)
+    STUDENT_ID=models.ForeignKey(Details_students,on_delete=models.CASCADE)
+    GATE_PASS=models.ForeignKey(Gate_Pass,on_delete=models.CASCADE)
+    GATE_STUD_NAME=models.CharField(max_length=20)  
+    GATE_STUD_BRANCH=models.CharField(max_length=20)
+    GATE_STUD_YEAR=models.CharField(max_length=20)
+    gate_time = models.TimeField()
+    re_entry= models.TimeField()
 
 
     

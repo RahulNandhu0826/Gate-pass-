@@ -7,7 +7,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 # Current Date
 from datetime import date, datetime
-
+from twilio.rest import Client
 from django.http import JsonResponse
 
 
@@ -58,8 +58,6 @@ def security_home(request):
 # -----ADVISOR LOGIN AND SIGN UP-------
 
 # ---------Sign up starting------------
-
-
 def Advisor_sign(request):
     if request.method == 'POST':
         Teacher_Name = request.POST['teacher_name']
@@ -346,38 +344,59 @@ def Student_requsting(request, admission_no):
 
 def Advisor_student_barcode_search(request):
     TEACHERS = TEACHER.objects.get(Advisor=request.user)
+
     if request.method == 'POST':
         Scanned = request.POST['barcode']
         teacher = request.POST['ad']
         print(Scanned)
-        if Details_students.objects.filter(TEACHER_NAME=TEACHERS):
+
+        # ✅ FIX 1: add .exists()
+        if Details_students.objects.filter(TEACHER_NAME=TEACHERS).exists():
             print(teacher)
             print(TEACHERS.TEACHER_DEPT)
-            student = Details_students.objects.get(ADMISSION_NO=Scanned,BRANCH=TEACHERS.TEACHER_DEPT)
 
-                
-            if int(student.ADMISSION_NO) == int(Scanned):
-                today = date.today()
-                print(today)
+            # ✅ FIX 2: keep filter but don't use it directly
+            student_qs = Details_students.objects.filter(
+                ADMISSION_NO=Scanned,
+                BRANCH=TEACHERS.TEACHER_DEPT
+            )
 
-                SeGate = Gate_Pass.objects.filter(STUDENT_ID__ADMISSION_NO=Scanned,gate_date=today)
+            # ✅ FIX 3: check exists before accessing
+            if student_qs.exists():
+                student = student_qs.get()
 
-                # ✅ check if record exists
-                if SeGate.exists():
-                     return render(request,"Advisor_student_barcode_search.html",{'key': 'ALREADY GATE PASS ISSUED TODAY'})
+                # ✅ FIX 4: safe comparison (or you can remove it)
+                if str(student.ADMISSION_NO) == str(Scanned):
+                    today = date.today()
+                    print(today)
+
+                    SeGate = Gate_Pass.objects.filter(
+                        STUDENT_ID__ADMISSION_NO=Scanned,
+                        gate_date=today
+                    )
+
+                    if SeGate.exists():
+                        return render(request, "Advisor_student_barcode_search.html", {
+                            'key': 'ALREADY GATE PASS ISSUED TODAY'
+                        })
+                    else:
+                        print("Entered")
+                        return redirect(Student_requsting, admission_no=Scanned)
                 else:
-                    print("Entered")
-                    return redirect(Student_requsting, admission_no=Scanned)
+                    print("add student")
+                    return redirect(Add_students_details)
             else:
                 print("add student")
                 return redirect(Add_students_details)
+
         else:
             print("add student")
             return redirect(Add_students_details)
+
     else:
         return render(request, "Advisor_student_barcode_search.html", {'keys': TEACHERS})
-    return render(request, "Advisor_student_barcode_search.html")
-# return render(request,"Advisor_student_barcode_search.html",{'keys':TEACHERS})
+        # return render(request, "Advisor_student_barcode_search.html")
+    # return render(request,"Advisor_student_barcode_search.html",{'keys':TEACHERS})
 
 
 def Advisor_admission(request):
@@ -386,27 +405,45 @@ def Advisor_admission(request):
         Scanned = request.POST['barcode']
         teacher = request.POST['ad']
         print(Scanned)
-        if Details_students.objects.filter(TEACHER_NAME=TEACHERS):
+        # ✅ FIX 1: add .exists()
+        if Details_students.objects.filter(TEACHER_NAME=TEACHERS).exists():
             print(teacher)
             print(TEACHERS.TEACHER_DEPT)
-            student = Details_students.objects.get(ADMISSION_NO=Scanned,BRANCH=TEACHERS.TEACHER_DEPT)
 
-                
-            if int(student.ADMISSION_NO) == int(Scanned):
-                today = date.today()
-                print(today)
+            # ✅ FIX 2: keep filter but don't use it directly
+            student_qs = Details_students.objects.filter(
+                ADMISSION_NO=Scanned,
+                BRANCH=TEACHERS.TEACHER_DEPT
+            )
 
-                SeGate = Gate_Pass.objects.filter(STUDENT_ID__ADMISSION_NO=Scanned,gate_date=today)
+            # ✅ FIX 3: check exists before accessing
+            if student_qs.exists():
+                student = student_qs.get()
 
-                # ✅ check if record exists
-                if SeGate.exists():
-                     return render(request,"Advisor_admission.html",{'key': 'ALREADY GATE PASS ISSUED TODAY'})
+                # ✅ FIX 4: safe comparison (or you can remove it)
+                if str(student.ADMISSION_NO) == str(Scanned):
+                    today = date.today()
+                    print(today)
+
+                    SeGate = Gate_Pass.objects.filter(
+                        STUDENT_ID__ADMISSION_NO=Scanned,
+                        gate_date=today
+                    )
+
+                    if SeGate.exists():
+                        return render(request, "Advisor_student_barcode_search.html", {
+                            'key': 'ALREADY GATE PASS ISSUED TODAY'
+                        })
+                    else:
+                        print("Entered")
+                        return redirect(Student_requsting, admission_no=Scanned)
                 else:
-                    print("Entered")
-                    return redirect(Student_requsting, admission_no=Scanned)
+                    print("add student")
+                    return redirect(Add_students_details)
             else:
                 print("add student")
                 return redirect(Add_students_details)
+
         else:
             print("add student")
             return redirect(Add_students_details)
@@ -577,48 +614,28 @@ def Hod_st_approval(request):
     return render(request, "Hod_st_approval.html", {'key': SeGate})
 
 
-def pay_accepts(request, pk):
+def pay_accepts( request,pk):
     gatte = Gate_Pass.objects.get(id=pk)
     gatte.HOD_APPROVE = "yes"
     gatte.save()
-
-    from twilio.rest import Client
-
     client = Client(
         settings.TWILIO_ACCOUNT_SID,
         settings.TWILIO_AUTH_TOKEN
     )
-
     message = f"Issuing Gate Pass to {gatte.STUD_NAME} to leave the college. Reason: {gatte.REASONS}"
-
     # ✅ get phone from DB (NOT request)
     phone = gatte.STUD_PHONE1
-
     phone = phone.strip()
     phone = ''.join(filter(str.isdigit, phone))
-
     to = "+91" + phone
-
     print("Sending to:", to)
-
     sms = client.messages.create(
         body=message,
         from_=settings.TWILIO_PHONE_NUMBER,
         to=to
     )
-
     return redirect(Hod_st_approval)
 
-def pay_Rejects(request, pk):
-
-    gatte = Gate_Pass.objects.filter(id=pk)
-    gatte.delete()
-    return redirect(Hod_st_approval)
-# ----- live clock----------------------------
-
-
-# def live_clock(request):
-#     return render(request, "live_clock.html")
 
 
 # phone calls
@@ -633,6 +650,30 @@ def send_sms(phone, message):
         from_=settings.TWILIO_PHONE_NUMBER,
         to=phone
     )
+
+def pay_Rejects(request, pk):
+
+    gatte = Gate_Pass.objects.filter(id=pk)
+    gatte.delete()
+    return redirect(Hod_st_approval)
+
+
+
+def student_list(request):
+    if request.method=='POST':
+        query =request.POST['arch']   
+        print(00) 
+        data = Gate_Pass.objects.filter(STUD_NAME=query ,HOD_APPROVE='yes',exit_time__isnull=False)
+        print(000)
+        return render(request, "Hod_search.html", {"data": data})
+
+    return render(request, "Hod_search.html", {"data": data})
+# ----- live clock----------------------------
+
+
+# def live_clock(request):
+#     return render(request, "live_clock.html")
+
 # FAST2SMS_API_KEY = "doG1RxJc3eVITWFjX4ialPDgE8UNB7LtmkCK52SO9ufYzQbsnqdPXnj9b2HA8yUM0IlTw7iY4LKSvC35"
 
 

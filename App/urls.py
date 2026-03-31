@@ -85,7 +85,7 @@ urlpatterns= [
     path('pay_accepts<str:pk>',views.pay_accepts,name='pay_acceptss'),
     path('pay_Rejects<str:pk>',views.pay_Rejects,name='pay_Rejectss'),
 
-
+    path('students', views.student_list),
    
    
 

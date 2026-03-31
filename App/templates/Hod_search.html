@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HOD Gate Pass List</title>
+<title>HOD Gate Pass Search List</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -49,14 +49,8 @@ font-weight:500;
 }
 
 </style>
-
-</head>
-
 <body>
-
-<!-- Navbar -->
-
-<nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark">
 
 <div class="container">
 
@@ -64,33 +58,15 @@ font-weight:500;
 <i class="bi bi-shield-check"></i>
 Gate Pass Management
 </span>
-<form class="d-flex align-items-center gap-2" action="students" method="POST">
-    {% csrf_token %}
-    
-    <input 
-        class="form-control rounded-pill px-3" 
-        type="search" 
-        name="arch"
-        placeholder="🔍 Search students..." 
-        aria-label="Search"
-    >
-    
-    <button 
-        class="btn btn-success rounded-pill px-4" 
-        type="submit">
-        Search
-    </button>
-</form>
 
-<a href="Hod_Home" class="btn btn-outline-light btn-sm">
+
+<a href="Gate_list" class="btn btn-outline-light btn-sm">
 <i class="bi bi-arrow-left"></i> Back
 </a>
 
 </div>
 
 </nav>
-
-
 <div class="container mt-5">
 
 
@@ -131,7 +107,7 @@ Students currently outside campus
 
 <tbody>
 
-{% for i in key %}
+{% for i in data %}
 
 <tr>
 
@@ -191,3 +167,4 @@ No gate pass records available
 </body>
 
 </html>
+ 

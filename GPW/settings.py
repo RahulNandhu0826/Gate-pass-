@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 #import os path
 import os.path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -122,6 +123,8 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'App/static')
 
 #message
 
-
+TWILIO_ACCOUNT_SID = 'AC487e7c2e6e28e6ffb9b1cee4bfe38907'
+TWILIO_AUTH_TOKEN = 'd358827588fcd156da000c8acb8193c7'
+TWILIO_PHONE_NUMBER = '+12543848353'
 
 
